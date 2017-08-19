@@ -14,7 +14,7 @@ const app = express();
 // Windows and Linux users; You should have retained the user/pw from the pre-work for this course.
 // Your url may require that it's composed of additional information including user and password
 // const conString = 'postgres://USER:PASSWORD@HOST:PORT/DBNAME';
-const conString = 'postgres://postgres@localhost:5432';
+const conString = 'postgres://postgres@localhost:5432/kilovolt';
 
 // TODO: Our pg module has a Client constructor that accepts one argument: the conString we just defined.
 //       This is how it knows the URL and, for Windows and Linux users, our username and password for our
@@ -66,7 +66,7 @@ app.post('/articles', function(request, response) {
 
   // Put your response here...
 
-  // We are requesting information so this line corresponds to number 2 on the diagram. CREATE is the part of CRUD that is being utilized here.
+  // We are requesting information so this line corresponds to number 3 on the diagram. CREATE is the part of CRUD that is being utilized her because of the INSERT keyword on line 72. The insertRecord() method from article.js interacts with the below.
 
   client.query(
     `INSERT INTO
@@ -95,7 +95,7 @@ app.put('/articles/:id', function(request, response) {
 
   // Put your response here...
 
-  // We are making requests so this line corresponds to the number 2 on the diagram. We are also expecting a response so it corresponds to the number 5. UPDATE is the part of CRUD that is being utilized.
+  // We are making requests from a database so this line corresponds to the number 3 on the diagram. We are also expecting a response so it corresponds to the number 5. UPDATE is the part of CRUD that is being utilized.
 
   client.query(
     `UPDATE articles
@@ -126,7 +126,7 @@ app.delete('/articles/:id', function(request, response) {
 
   // Put your response here...
 
-  // Requests are being made so this line corresponds to the number 2. We are expecting a response so this also corresponds to the number 5. DESTROY is the part of CRUD that is being utilized.
+  // Requests are being made so this line corresponds to the number 3. We are expecting a response so this also corresponds to the number 5. DESTROY is the part of CRUD that is being utilized. The following code interacts with the deleteRecord() method of article.
 
   client.query(
     `DELETE FROM articles WHERE article_id=$1;`,
@@ -157,7 +157,7 @@ app.delete('/articles', function(request, response) {
 });
 
 // COMMENT: What is this function invocation doing?
-// Put your response here...
+//loadDB creates a new table if none exists. It then populates the table with data from hackerIpsum.json, assuming again that the table does not exist.
 loadDB();
 
 app.listen(PORT, function() {
@@ -171,7 +171,7 @@ function loadArticles() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
   // Put your response here...
 
-  // There is a query being made so it corresponds to the number 3. READ is the part of CRUD that is being utilized.
+  // There is a query being made so it corresponds to the number 3. READ is the part of CRUD that is being utilized. INSERT is also used, so Create is bein utilized as well. It's important to note that if !parseInt(result.rows[0].count evaluates to true then no information is loaded from the database, and instead the information comes purely from the client-side.
 
   client.query('SELECT COUNT(*) FROM articles')
   .then(result => {
@@ -199,7 +199,7 @@ function loadArticles() {
 function loadDB() {
   // COMMENT: What number(s) of the full-stack-diagram.png image correspond to the following line of code? Which method of article.js is interacting with this particular piece of `server.js`? What part of CRUD is being enacted/managed by this particular piece of code?
 
-  // Put your response here... Queries are being made so it corresponds with number 3. CREATE is the part of CRUD that is being utilized.
+  // Put your response here... Queries are being made so it corresponds with number 3. CREATE is the part of CRUD that is being utilized. loadArticles
 
   client.query(`
     CREATE TABLE IF NOT EXISTS articles (
